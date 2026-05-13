@@ -1,0 +1,64 @@
+// Esquema de base de datos para el sistema de control de acceso con QR
+// Generador de cliente Prisma para Node.js
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Fuente de datos: PostgreSQL en Neon
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Usuario del sistema (admin o guardia)
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password_hash String
+  rol           String   // "admin" | "guardia"
+  created_at    DateTime @default(now())
+}
+
+// Persona registrada en el sistema (empleado, visitante, contratista)
+model Person {
+  id         String      @id @default(uuid())
+  nombre     String
+  tipo       String      // "empleado" | "visitante" | "contratista"
+  qr_token   String      @unique @default(uuid())
+  foto_url   String?
+  activo     Boolean     @default(true)
+  created_at DateTime    @default(now())
+  accesos    AccessLog[]
+  alertas    Alert[]
+}
+
+// Puerta o punto de acceso físico
+model Door {
+  id        String      @id @default(uuid())
+  nombre    String
+  ubicacion String
+  activa    Boolean     @default(true)
+  accesos   AccessLog[]
+}
+
+// Registro de cada entrada o salida
+model AccessLog {
+  id        String   @id @default(uuid())
+  person    Person   @relation(fields: [person_id], references: [id])
+  person_id String
+  door      Door     @relation(fields: [door_id], references: [id])
+  door_id   String
+  tipo      String   // "entrada" | "salida"
+  timestamp DateTime @default(now())
+}
+
+// Alertas generadas por accesos inválidos o irregulares
+model Alert {
+  id         String   @id @default(uuid())
+  person     Person?  @relation(fields: [person_id], references: [id])
+  person_id  String?
+  tipo       String   // "qr_invalido" | "fuera_horario" | "sin_salida"
+  mensaje    String
+  leida      Boolean  @default(false)
+  created_at DateTime @default(now())
+}

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npm list *)",
+      "Bash(grep -E \"zustand|typescript|vite$\")",
+      "Bash(npx prisma *)",
+      "Bash(npm run *)"
+    ]
+  }
+}
