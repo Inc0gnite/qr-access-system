@@ -3,6 +3,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import authRouter from './routes/auth';
+import personsRouter from './routes/persons';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -18,6 +19,7 @@ app.get('/api/health', (_req, res) => {
 
 // Rutas — se irán registrando por fase
 app.use('/api/auth', authRouter);
+app.use('/api/persons', personsRouter);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);

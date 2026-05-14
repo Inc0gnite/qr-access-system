@@ -3,7 +3,9 @@ import { useAuthStore } from '@/store/authStore';
 import { LoginPage } from '@/pages/LoginPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { ScannerPage } from '@/pages/ScannerPage';
+import { PersonsPage } from '@/pages/PersonsPage';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { Layout } from '@/components/Layout';
 
 function App() {
   const { isAuthenticated, user } = useAuthStore();
@@ -12,23 +14,31 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Login — redirige al panel si ya hay sesión activa */}
+        {/* Login — redirige si ya hay sesión activa */}
         <Route
           path="/login"
           element={isAuthenticated ? <Navigate to={defaultAuthed} replace /> : <LoginPage />}
         />
 
-        {/* Rutas solo para admin */}
-        <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
+        {/* Todas las rutas autenticadas comparten el Layout con sidebar */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<Layout />}>
+
+            {/* Solo admin */}
+            <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/personas" element={<PersonsPage />} />
+            </Route>
+
+            {/* Ambos roles */}
+            <Route element={<ProtectedRoute allowedRoles={['admin', 'guardia']} />}>
+              <Route path="/scanner" element={<ScannerPage />} />
+            </Route>
+
+          </Route>
         </Route>
 
-        {/* Rutas para ambos roles */}
-        <Route element={<ProtectedRoute allowedRoles={['admin', 'guardia']} />}>
-          <Route path="/scanner" element={<ScannerPage />} />
-        </Route>
-
-        {/* Raíz — redirige según estado de sesión */}
+        {/* Raíz — redirige según estado */}
         <Route
           path="/"
           element={
