@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { Bell, DoorOpen, FileText, LayoutDashboard, LogOut, Menu, QrCode, Shield, Users, X } from 'lucide-react';
+import { Bell, DoorOpen, FileText, LayoutDashboard, LogOut, Menu, QrCode, Users, X } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { useUnreadAlertsCount } from '@/hooks/useAlerts';
 
@@ -40,9 +40,7 @@ export function Layout() {
       {/* Mobile top bar */}
       <header className="md:hidden fixed top-0 left-0 right-0 z-20 flex items-center justify-between px-4 h-14 bg-bg-secondary border-b border-white/[0.07]">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-accent-light rounded-component flex items-center justify-center">
-            <Shield className="w-3.5 h-3.5 text-accent" />
-          </div>
+          <img src="/logo.png" alt="Logo" className="w-7 h-7 object-contain flex-shrink-0" />
           <span className="text-text-primary font-semibold text-sm">QR Access Control</span>
         </div>
         <button
@@ -70,9 +68,7 @@ export function Layout() {
       >
         {/* Logo — hidden on mobile (top bar handles it) */}
         <div className="hidden md:flex items-center gap-3 px-5 py-5 border-b border-white/[0.07]">
-          <div className="w-8 h-8 bg-accent-light rounded-component flex items-center justify-center flex-shrink-0">
-            <Shield className="w-4 h-4 text-accent" />
-          </div>
+          <img src="/logo.png" alt="Logo" className="w-9 h-9 flex-shrink-0 object-contain" />
           <span className="text-text-primary font-semibold text-sm leading-tight">
             QR Access<br />
             <span className="text-text-secondary font-normal text-xs">Control</span>
