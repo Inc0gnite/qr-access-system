@@ -47,3 +47,36 @@ export interface PersonFormData {
   foto_url?: string | null;
   activo?: boolean;
 }
+
+export interface Door {
+  id: string;
+  nombre: string;
+  ubicacion: string;
+  activa: boolean;
+}
+
+export interface ScanPayload {
+  qr_token: string;
+  door_id: string;
+}
+
+export interface ScanResult {
+  success: boolean;
+  tipo: 'entrada' | 'salida';
+  person: {
+    id: string;
+    nombre: string;
+    tipo: PersonTipo;
+    foto_url: string | null;
+  };
+  door: { id: string; nombre: string };
+  timestamp: string;
+}
+
+export interface AccessLog {
+  id: string;
+  person_id: string;
+  door_id: string;
+  tipo: 'entrada' | 'salida';
+  timestamp: string;
+}

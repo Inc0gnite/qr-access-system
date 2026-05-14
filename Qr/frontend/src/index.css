@@ -35,6 +35,26 @@
   }
 }
 
+/* Overrides para que html5-qrcode encaje con el tema oscuro */
+#qr-reader {
+  border: none !important;
+  width: 100% !important;
+}
+
+#qr-reader video {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+#qr-reader__scan_region {
+  background: transparent !important;
+}
+
+#qr-reader__dashboard {
+  display: none !important;
+}
+
 @layer components {
   /* Card base */
   .card {

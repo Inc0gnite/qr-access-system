@@ -4,6 +4,8 @@ import express from 'express';
 import cors from 'cors';
 import authRouter from './routes/auth';
 import personsRouter from './routes/persons';
+import accessRouter from './routes/access';
+import doorsRouter from './routes/doors';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -20,6 +22,8 @@ app.get('/api/health', (_req, res) => {
 // Rutas — se irán registrando por fase
 app.use('/api/auth', authRouter);
 app.use('/api/persons', personsRouter);
+app.use('/api/access', accessRouter);
+app.use('/api/doors', doorsRouter);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
