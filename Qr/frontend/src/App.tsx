@@ -1,24 +1,44 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
-// Placeholder de páginas — se completarán en fases siguientes
-function LoginPage() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="card text-center">
-        <h1 className="text-2xl font-semibold text-text-primary mb-2">QR Access Control</h1>
-        <p className="text-text-secondary text-sm">Sistema de control de acceso con QR</p>
-        <p className="text-accent text-xs mt-4">Fase 2 — Autenticación próximamente</p>
-      </div>
-    </div>
-  );
-}
+import { useAuthStore } from '@/store/authStore';
+import { LoginPage } from '@/pages/LoginPage';
+import { DashboardPage } from '@/pages/DashboardPage';
+import { ScannerPage } from '@/pages/ScannerPage';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
 
 function App() {
+  const { isAuthenticated, user } = useAuthStore();
+  const defaultAuthed = user?.rol === 'admin' ? '/dashboard' : '/scanner';
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        {/* Login — redirige al panel si ya hay sesión activa */}
+        <Route
+          path="/login"
+          element={isAuthenticated ? <Navigate to={defaultAuthed} replace /> : <LoginPage />}
+        />
+
+        {/* Rutas solo para admin */}
+        <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+        </Route>
+
+        {/* Rutas para ambos roles */}
+        <Route element={<ProtectedRoute allowedRoles={['admin', 'guardia']} />}>
+          <Route path="/scanner" element={<ScannerPage />} />
+        </Route>
+
+        {/* Raíz — redirige según estado de sesión */}
+        <Route
+          path="/"
+          element={
+            isAuthenticated
+              ? <Navigate to={defaultAuthed} replace />
+              : <Navigate to="/login" replace />
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
