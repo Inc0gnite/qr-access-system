@@ -4,6 +4,7 @@ import { LoginPage } from '@/pages/LoginPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { ScannerPage } from '@/pages/ScannerPage';
 import { PersonsPage } from '@/pages/PersonsPage';
+import { AlertsPage } from '@/pages/AlertsPage';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { Layout } from '@/components/Layout';
 
@@ -28,6 +29,7 @@ function App() {
             <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/personas" element={<PersonsPage />} />
+              <Route path="/alertas" element={<AlertsPage />} />
             </Route>
 
             {/* Ambos roles */}

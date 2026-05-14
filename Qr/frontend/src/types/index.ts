@@ -104,3 +104,12 @@ export interface InsideEntry {
   door: { id: string; nombre: string };
   since: string;
 }
+
+export interface Alert {
+  id: string;
+  tipo: 'qr_invalido' | 'fuera_horario' | 'sin_salida';
+  mensaje: string;
+  leida: boolean;
+  created_at: string;
+  person: { id: string; nombre: string } | null;
+}

@@ -1,11 +1,13 @@
 // Layout principal con sidebar para todas las páginas autenticadas
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, LogOut, QrCode, Shield, Users } from 'lucide-react';
+import { Bell, LayoutDashboard, LogOut, QrCode, Shield, Users } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
+import { useUnreadAlertsCount } from '@/hooks/useAlerts';
 
 const adminLinks = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/personas', icon: Users, label: 'Personas' },
+  { to: '/alertas', icon: Bell, label: 'Alertas' },
   { to: '/scanner', icon: QrCode, label: 'Escáner QR' },
 ];
 
@@ -17,6 +19,9 @@ export function Layout() {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
   const links = user?.rol === 'admin' ? adminLinks : guardiaLinks;
+
+  // Badge de alertas — solo para admin; poll cada 15s
+  const { data: unreadCount = 0 } = useUnreadAlertsCount(user?.rol === 'admin');
 
   function handleLogout() {
     logout();
@@ -55,7 +60,13 @@ export function Layout() {
               }
             >
               <Icon className="w-4 h-4 flex-shrink-0" />
-              {label}
+              <span className="flex-1">{label}</span>
+              {/* Badge de alertas sin leer */}
+              {to === '/alertas' && unreadCount > 0 && (
+                <span className="flex items-center justify-center bg-error text-white text-[10px] font-semibold rounded-full min-w-4 h-4 px-1 leading-none">
+                  {unreadCount > 99 ? '99+' : unreadCount}
+                </span>
+              )}
             </NavLink>
           ))}
         </nav>
