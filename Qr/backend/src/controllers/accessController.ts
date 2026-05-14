@@ -1,4 +1,4 @@
-// Controlador de accesos: escaneo de QR y registro de entrada/salida
+// Controlador de accesos: escaneo QR, feed en vivo y personas dentro
 import { Request, Response } from 'express';
 import { prisma } from '../lib/prisma';
 import { scanSchema } from '../validators/accessValidator';
@@ -75,6 +75,53 @@ export async function scan(req: Request, res: Response): Promise<void> {
     });
   } catch (error) {
     console.error('Error en escaneo:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}
+
+// Últimas 20 entradas/salidas con datos de persona y puerta
+export async function live(_req: Request, res: Response): Promise<void> {
+  try {
+    const logs = await prisma.accessLog.findMany({
+      take: 20,
+      orderBy: { timestamp: 'desc' },
+      include: {
+        person: { select: { id: true, nombre: true, tipo: true, foto_url: true } },
+        door: { select: { id: true, nombre: true } },
+      },
+    });
+    res.json(logs);
+  } catch (error) {
+    console.error('Error obteniendo accesos recientes:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}
+
+// Personas que están dentro ahora (último registro = 'entrada')
+export async function inside(_req: Request, res: Response): Promise<void> {
+  try {
+    const persons = await prisma.person.findMany({
+      where: { activo: true },
+      include: {
+        accesos: {
+          orderBy: { timestamp: 'desc' },
+          take: 1,
+          include: { door: { select: { id: true, nombre: true } } },
+        },
+      },
+    });
+
+    const insideList = persons
+      .filter((p) => p.accesos.length > 0 && p.accesos[0].tipo === 'entrada')
+      .map((p) => ({
+        person: { id: p.id, nombre: p.nombre, tipo: p.tipo, foto_url: p.foto_url },
+        door: p.accesos[0].door,
+        since: p.accesos[0].timestamp,
+      }));
+
+    res.json(insideList);
+  } catch (error) {
+    console.error('Error obteniendo personas dentro:', error);
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 }

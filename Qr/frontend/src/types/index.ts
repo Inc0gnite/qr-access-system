@@ -80,3 +80,27 @@ export interface AccessLog {
   tipo: 'entrada' | 'salida';
   timestamp: string;
 }
+
+export interface LiveLog {
+  id: string;
+  tipo: 'entrada' | 'salida';
+  timestamp: string;
+  person: {
+    id: string;
+    nombre: string;
+    tipo: PersonTipo;
+    foto_url: string | null;
+  };
+  door: { id: string; nombre: string };
+}
+
+export interface InsideEntry {
+  person: {
+    id: string;
+    nombre: string;
+    tipo: PersonTipo;
+    foto_url: string | null;
+  };
+  door: { id: string; nombre: string };
+  since: string;
+}
