@@ -90,17 +90,17 @@ export function PersonsPage() {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-xl font-semibold text-text-primary">Personas</h1>
           <p className="text-text-secondary text-sm mt-0.5">
             Empleados, visitantes y contratistas registrados
           </p>
         </div>
-        <button onClick={openCreate} className="btn-primary flex items-center gap-2">
+        <button onClick={openCreate} className="btn-primary flex items-center gap-2 self-start sm:self-auto">
           <Plus className="w-4 h-4" />
           Nueva persona
         </button>
@@ -154,7 +154,8 @@ export function PersonsPage() {
             No se encontraron personas con los filtros aplicados.
           </div>
         ) : (
-          <table className="w-full">
+          <div className="overflow-x-auto">
+          <table className="w-full min-w-[600px]">
             <thead>
               <tr className="border-b border-white/[0.07]">
                 <th className="text-left text-text-secondary text-xs font-medium px-5 py-3">
@@ -271,6 +272,7 @@ export function PersonsPage() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
 

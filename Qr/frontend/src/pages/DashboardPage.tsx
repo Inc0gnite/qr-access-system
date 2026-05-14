@@ -131,7 +131,7 @@ export function DashboardPage() {
   const lastActivity = liveAccess[0]?.timestamp;
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -149,7 +149,7 @@ export function DashboardPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <StatCard
           icon={Users}
           label="Dentro ahora"
@@ -172,10 +172,10 @@ export function DashboardPage() {
       </div>
 
       {/* Main grid */}
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
 
         {/* Dentro ahora */}
-        <div className="col-span-2 bg-bg-card border border-white/[0.07] rounded-card overflow-hidden flex flex-col">
+        <div className="lg:col-span-2 bg-bg-card border border-white/[0.07] rounded-card overflow-hidden flex flex-col">
           <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.07] flex-shrink-0">
             <h2 className="text-text-primary text-sm font-medium">Dentro ahora</h2>
             <span className="badge bg-accent-light text-accent">{inside.length}</span>
@@ -194,7 +194,7 @@ export function DashboardPage() {
         </div>
 
         {/* Feed de accesos */}
-        <div className="col-span-3 bg-bg-card border border-white/[0.07] rounded-card overflow-hidden flex flex-col">
+        <div className="lg:col-span-3 bg-bg-card border border-white/[0.07] rounded-card overflow-hidden flex flex-col">
           <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.07] flex-shrink-0">
             <h2 className="text-text-primary text-sm font-medium">Accesos recientes</h2>
             <span className="text-text-secondary text-xs">
@@ -206,8 +206,8 @@ export function DashboardPage() {
               <p className="text-text-secondary text-sm">Sin registros de acceso</p>
             </div>
           ) : (
-            <div className="overflow-auto">
-              <table className="w-full">
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[480px]">
                 <thead>
                   <tr className="border-b border-white/[0.07]">
                     <th className="text-left text-text-secondary text-xs font-medium px-5 py-2.5">

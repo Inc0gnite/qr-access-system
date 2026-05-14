@@ -7,6 +7,7 @@ import personsRouter from './routes/persons';
 import accessRouter from './routes/access';
 import doorsRouter from './routes/doors';
 import alertsRouter from './routes/alerts';
+import reportsRouter from './routes/reports';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -26,6 +27,7 @@ app.use('/api/persons', personsRouter);
 app.use('/api/access', accessRouter);
 app.use('/api/doors', doorsRouter);
 app.use('/api/alerts', alertsRouter);
+app.use('/api/reports', reportsRouter);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);

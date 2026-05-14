@@ -6,56 +6,6 @@ Sistema web que permite registrar entradas y salidas de personas (empleados,
 visitantes, contratistas) mediante códigos QR únicos. Incluye panel de 
 administración, historial de accesos, alertas y reportes exportables a Excel.
 
-## Diseño y estilo visual
-- Tema base: dark mode como predeterminado
-- Estilo general: SaaS moderno, limpio y elegante — sin elementos decorativos 
-  innecesarios, sin gradientes llamativos, sin colores saturados
-- Paleta base sugerida:
-    Background principal:  #0f1117
-    Background secundario: #181b24
-    Background de cards:   #1e2130
-    Bordes:                rgba(255,255,255,0.07)
-    Texto principal:       #e8eaf0
-    Texto secundario:      #8a8fa8
-- Color de acento: púrpura (#8b5cf6) como color principal de la marca,
-  usado en botones primarios, badges activos y elementos destacados
-- La paleta de acento es flexible — si en algún módulo tiene más sentido 
-  usar azul, verde o ámbar como acento secundario, puedes hacerlo con criterio
-- Tipografía: Inter o DM Sans, pesos 400 y 500 únicamente
-- Espaciado generoso entre elementos — preferir aire a densidad
-- Bordes sutiles de 0.5px, sin sombras fuertes
-- Border radius de 8px para componentes pequeños, 12px para cards
-- Usar Tailwind CSS para los estilos
-- Los íconos deben ser de Lucide React
-- Las tablas deben tener filas con hover sutil y separadores tenues
-- Los formularios deben tener inputs con fondo ligeramente más claro 
-  que el background de la card que los contiene
-- Los estados de éxito usan verde (#10b981), error rojo (#ef4444), 
-  advertencia ámbar (#f59e0b) e información azul (#3b82f6)
-
-## README
-Al finalizar el proyecto, generar un README.md profesional que incluya:
-- Descripción del proyecto
-- Screenshot del dashboard
-- Stack tecnológico con badges
-- Instrucciones para correr el proyecto localmente
-- Variables de entorno necesarias
-- Link al deploy en Vercel
-
-## Seguridad adicional
-- Si el JWT expira, redirigir automáticamente al login sin romper la app
-- El token QR de una persona inactiva debe ser rechazado aunque el JWT 
-  sea válido
-- Los endpoints de admin no deben ser accesibles con rol guardia
-
-## Seed de base de datos
-Crear un archivo seed.ts con:
-- 1 usuario admin y 1 usuario guardia
-- 10 personas de prueba (mix de empleados y visitantes)
-- 3 puertas
-- 30 registros de acceso de los últimos 7 días
-- 5 alertas de ejemplo
-
 ## Stack tecnológico
 - Frontend: React + TypeScript + Zustand + TanStack Query
 - Backend: Node.js + Express (funciones serverless en Vercel)
@@ -113,11 +63,11 @@ model Person {
 }
 
 model Door {
-  id       String      @id @default(uuid())
-  nombre   String
+  id        String      @id @default(uuid())
+  nombre    String
   ubicacion String
-  activa   Boolean     @default(true)
-  accesos  AccessLog[]
+  activa    Boolean     @default(true)
+  accesos   AccessLog[]
 }
 
 model AccessLog {
@@ -131,12 +81,12 @@ model AccessLog {
 }
 
 model Alert {
-  id        String   @id @default(uuid())
-  person    Person?  @relation(fields: [person_id], references: [id])
-  person_id String?
-  tipo      String   // "qr_invalido" | "fuera_horario" | "sin_salida"
-  mensaje   String
-  leida     Boolean  @default(false)
+  id         String   @id @default(uuid())
+  person     Person?  @relation(fields: [person_id], references: [id])
+  person_id  String?
+  tipo       String   // "qr_invalido" | "fuera_horario" | "sin_salida"
+  mensaje    String
+  leida      Boolean  @default(false)
   created_at DateTime @default(now())
 }
 
@@ -203,20 +153,60 @@ model Alert {
 2. Activar/desactivar puertas
 3. En frontend: tabla de puertas con formulario de creación/edición
 
+## Diseño y estilo visual
+- Tema base: dark mode como predeterminado
+- Estilo general: SaaS moderno, limpio y elegante
+- Paleta base:
+    Background principal:  #0f1117
+    Background secundario: #181b24
+    Background de cards:   #1e2130
+    Bordes:                rgba(255,255,255,0.07)
+    Texto principal:       #e8eaf0
+    Texto secundario:      #8a8fa8
+- Color de acento: púrpura (#8b5cf6)
+- La paleta de acento es flexible según el módulo
+- Tipografía: Inter o DM Sans, pesos 400 y 500
+- Espaciado generoso, bordes de 0.5px, sin sombras fuertes
+- Border radius: 8px componentes, 12px cards
+- Usar Tailwind CSS para los estilos
+- Íconos: Lucide React
+- Tablas con hover sutil y separadores tenues
+- Estados: éxito #10b981, error #ef4444, advertencia #f59e0b, info #3b82f6
+
+## Seed de base de datos
+Crear un archivo seed.ts con:
+- 1 usuario admin y 1 usuario guardia
+- 10 personas de prueba (mix de empleados y visitantes)
+- 3 puertas
+- 30 registros de acceso de los últimos 7 días
+- 5 alertas de ejemplo
+
+## Seguridad adicional
+- Si el JWT expira, redirigir automáticamente al login sin romper la app
+- El token QR de una persona inactiva debe ser rechazado aunque el JWT sea válido
+- Los endpoints de admin no deben ser accesibles con rol guardia
+
+## README
+Al finalizar el proyecto, generar un README.md profesional que incluya:
+- Descripción del proyecto
+- Screenshot del dashboard
+- Stack tecnológico con badges
+- Instrucciones para correr el proyecto localmente
+- Variables de entorno necesarias
+- Link al deploy en Vercel
+
+## Variables de entorno necesarias (.env)
+DATABASE_URL=     # connection string de Neon
+JWT_SECRET=       # clave secreta para firmar tokens
+VITE_API_URL=     # URL del backend para el frontend
+
 ## Reglas generales de desarrollo
 - Usar TypeScript estricto en frontend y backend
 - Validar todos los inputs con Zod antes de tocar la base de datos
-- Manejar errores con try/catch en todos los endpoints y retornar 
-  mensajes claros
+- Manejar errores con try/catch en todos los endpoints
 - Usar variables de entorno para toda configuración sensible
 - El código debe estar comentado en español
 - Nombrar variables, funciones y endpoints en inglés
-- Diseño del frontend: dark mode, estilo SaaS moderno y limpio
-
-## Variables de entorno necesarias (.env)
-DATABASE_URL=           # connection string de Neon
-JWT_SECRET=             # clave secreta para firmar tokens
-VITE_API_URL=           # URL del backend para el frontend
 
 ## Lo que NO hay que hacer
 - No usar Socket.io ni WebSockets

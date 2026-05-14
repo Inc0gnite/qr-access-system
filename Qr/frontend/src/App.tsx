@@ -5,6 +5,8 @@ import { DashboardPage } from '@/pages/DashboardPage';
 import { ScannerPage } from '@/pages/ScannerPage';
 import { PersonsPage } from '@/pages/PersonsPage';
 import { AlertsPage } from '@/pages/AlertsPage';
+import { ReportsPage } from '@/pages/ReportsPage';
+import { DoorsPage } from '@/pages/DoorsPage';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { Layout } from '@/components/Layout';
 
@@ -30,6 +32,8 @@ function App() {
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/personas" element={<PersonsPage />} />
               <Route path="/alertas" element={<AlertsPage />} />
+              <Route path="/reportes" element={<ReportsPage />} />
+              <Route path="/puertas" element={<DoorsPage />} />
             </Route>
 
             {/* Ambos roles */}

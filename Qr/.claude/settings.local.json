@@ -5,7 +5,12 @@
       "Bash(npm list *)",
       "Bash(grep -E \"zustand|typescript|vite$\")",
       "Bash(npx prisma *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git remote *)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\imsui\\\\OneDrive\\\\Escritorio\\\\Portafolio\\\\Qr\" -Recurse -Force | Select-Object FullName | Sort-Object FullName | ForEach-Object { $_.FullName })",
+      "Bash(npx tsc *)",
+      "Bash(git add *)"
     ]
   }
 }

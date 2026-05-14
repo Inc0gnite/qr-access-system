@@ -103,10 +103,10 @@ export function AlertsPage() {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div className="flex items-center gap-3">
           <Bell className="w-5 h-5 text-accent" />
           <h1 className="text-xl font-semibold text-text-primary">Alertas</h1>
@@ -119,7 +119,7 @@ export function AlertsPage() {
         <button
           onClick={handleMarkAllAsRead}
           disabled={!hasUnread || markAllAsRead.isPending}
-          className="btn-secondary flex items-center gap-2 text-xs disabled:opacity-40"
+          className="btn-secondary flex items-center gap-2 text-xs disabled:opacity-40 self-start sm:self-auto"
         >
           <CheckCheck className="w-3.5 h-3.5" />
           Marcar todas como leídas
@@ -155,7 +155,8 @@ export function AlertsPage() {
             </p>
           </div>
         ) : (
-          <table className="w-full">
+          <div className="overflow-x-auto">
+          <table className="w-full min-w-[520px]">
             <thead>
               <tr className="border-b border-white/[0.07]">
                 <th className="text-left text-text-secondary text-xs font-medium px-5 py-3">
@@ -180,6 +181,7 @@ export function AlertsPage() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
 

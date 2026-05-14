@@ -92,7 +92,7 @@ export function ScannerPage() {
   }, [handleQrCode]);
 
   return (
-    <div className="p-6 max-w-xl">
+    <div className="p-4 sm:p-6 w-full max-w-xl mx-auto">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <Camera className="w-5 h-5 text-accent" />

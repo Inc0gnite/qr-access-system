@@ -113,3 +113,14 @@ export interface Alert {
   created_at: string;
   person: { id: string; nombre: string } | null;
 }
+
+export interface AttendanceRecord {
+  person: {
+    id: string;
+    nombre: string;
+    tipo: PersonTipo;
+  };
+  sessions: number;
+  total_minutes: number;
+  days: number;
+}

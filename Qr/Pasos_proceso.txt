@@ -1,0 +1,5 @@
+--- Crear automatización de procesos ---
+
+Archivo donde se crea el cruce       : ALTAS_ENTEL_DENTAL_ORIONT_FechaDiaActual_A-Linea
+
+Archivo de donde se sacan las polizas:ALTAS_URGENCIA_DENTAL_ALINEA_DiaAnterior
